@@ -42,11 +42,8 @@ public class RaceDisplay extends JComponent {
         this.playerX = playerX;
     }
     public boolean setCarXY(int numbercar, int x, int y){
-        if (numbercar >= capacityRoad){
-          //  for (int i = 0; i < capacityRoad; i++)
-            //    carX[i] = carY[i] = 0;
+        if (numbercar >= capacityRoad)
             return false;
-        }
         else {
         carX[numbercar] = x;
         carY[numbercar] = y;
