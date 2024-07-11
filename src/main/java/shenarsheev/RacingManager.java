@@ -7,22 +7,27 @@ import shenarsheev.cars.PlayerCar;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Queue;
-
+/**
+ * В паттерне Модель-Представление-Контроллер
+ * данный класс вместе с пакетом cars реализует компоненту Модель
+ */
 public class RacingManager {
     //время прохода расстояние, равного длине корпуса машины
-    private final int timegap = (int)(1 + RaceConst.carheight/RaceConst.velocity);
-    private RaceDisplay display = null;
-    private PlayerCar player = null;
-    private Queue racingPark = null;
-    private LinkedList<Car> onRoad = null;
+    private final int timegap = 1 + RaceConst.carheight/RaceConst.velocity;
+    private RaceDisplay display;
+    private PlayerCar player;
+    //все участвующие в игре машины
+    private Queue racingPark;
+    //машины, "едущие по дороге"
+    private LinkedList<Car> onRoad;
     private ListIterator<Car> itCar = null;
     public RacingManager(RaceDisplay d){
         display = d;
         player = new PlayerCar();
         player.setY(500);
         racingPark = new LinkedList<Car>();
-        onRoad = new LinkedList<Car>();
-        for (int i = 0; i < 6; i++){
+        onRoad = new LinkedList<>();
+        for (int i = 0; i < 7; i++){
             racingPark.add(new Car());
         }
     }
@@ -30,7 +35,11 @@ public class RacingManager {
     public PlayerCar getPlayer(){
         return player;
     }
+    //организует весь процесс игры: выпускает новые машины на дорогу
+    //убирает с дороги вышедшие за пределы экрана
+    //возвращает false, если произошло столкновение с машиной игрока
     public boolean raceProcessing(){
+        //начало игры - трасса еще пуста
         if (onRoad.isEmpty()){
             Car car = (Car)racingPark.poll();
             car.setX(choseLine());
@@ -47,6 +56,7 @@ public class RacingManager {
                 Car car = itCar.next();
                 if(car.isCrash(player)){
                     itCar = onRoad.listIterator();
+                    //проверка условия столкновения
                     while (itCar.hasNext())
                     {
                         racingPark.offer(itCar.next());
@@ -54,13 +64,15 @@ public class RacingManager {
                     }
                     return false;
                 }
+                //добавляет новую машину
                 if(car.getY() == 2*timegap*RaceConst.velocity){
                     Car nucar = (Car)racingPark.poll();
                     nucar.setX(choseLine()); nucar.setY(0);
                     nucar.driveCar();
                     itCar.add(nucar);
                 }
-                if (car.getY() >= 6*timegap*RaceConst.velocity){
+                //удаляет уехавшую из области видимости пользователя машину
+                if (car.getY() >= 6*timegap*RaceConst.velocity ){
                     racingPark.offer(car);
                     itCar.remove();
                 }

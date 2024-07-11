@@ -9,18 +9,21 @@ import java.net.URL;
 import static shenarsheev.RaceConst.*;
 
 public class RaceDisplay extends JComponent {
+    //общее количество машин соперников, которые можно разместить на экране
     private int capacityRoad = 4;
+    //координаты игрока
     private int playerX;
     private int playerY = 0;
+    //координаты этих машин
     private int[] carX = null;
     private int[] carY = null;
     //смещение относительно экрана
     private int biasX = 25;
     private int biasY = -200;
-    private Image img;
+    private Image img = null;
     private Image startImg;
-    private Image roadImg = null;
-    private Image carImg = null;
+    private Image roadImg;
+    private Image carImg;
     public RaceDisplay(){
         carX = new int[capacityRoad];
         carY = new int[capacityRoad];
@@ -39,11 +42,16 @@ public class RaceDisplay extends JComponent {
         this.playerX = playerX;
     }
     public boolean setCarXY(int numbercar, int x, int y){
-        if (numbercar > capacityRoad)
+        if (numbercar >= capacityRoad){
+          //  for (int i = 0; i < capacityRoad; i++)
+            //    carX[i] = carY[i] = 0;
             return false;
+        }
+        else {
         carX[numbercar] = x;
         carY[numbercar] = y;
         return true;
+        }
     }
     public void setStartPicture(boolean show_start){
         img = (show_start == true)? startImg: roadImg;

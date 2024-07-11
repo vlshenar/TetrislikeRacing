@@ -23,8 +23,9 @@ public class PlayerCar extends AbstractCar{
             return true;
         }
     }
+    //пересчет текущего положения машины игрока с учетом величины скорости
     public int getCalculatedY(){
-        int timegap = getY()/RaceConst.velocity;
-        return RaceConst.velocity*timegap;
+        int timegap = getY()/(RaceConst.velocity + Car.getBoost());
+        return (RaceConst.velocity + Car.getBoost())*timegap;
     }
 }
