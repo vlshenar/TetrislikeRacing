@@ -3,6 +3,17 @@ package shenarsheev.cars;
 import shenarsheev.RaceConst;
 
 public class Car extends AbstractCar{
+    //маркировка главной машины в паре
+    private boolean major;
+    // определение машины как главной или подчиненной
+    public void setMajor(boolean major) {
+        this.major = major;
+    }
+
+    public boolean isMajor() {
+        return major;
+    }
+
     //время пролета расстояния, равного длине корпуса машины
     //необходима для выполнения условия добавления новой машины в
     //RacingManager.raceProcessing()
@@ -33,7 +44,10 @@ public class Car extends AbstractCar{
     }
     //если совпали координаты - "авария"
     public boolean isCrash(PlayerCar pc){
-        return (getX() == pc.getX() && getY() == pc.getCalculatedY())?
+        //определяет эффективную длину взаимодействия машин
+        int cargolenght = 3*RaceConst.carheight/4;
+        return (getX() == pc.getX() && getY() + cargolenght >= pc.getCalculatedY()
+                && getY() <= pc.getCalculatedY() + cargolenght)?
                 true: false;
     }
 }

@@ -43,7 +43,7 @@ public class RacingManager {
         if (onRoad.isEmpty()){
             Car car = (Car)racingPark.poll();
             car.setX(choseLine());
-            car.setY(0);
+            car.setY(0); car.setMajor(true);
             onRoad.add(car);
             itCar = onRoad.listIterator();
             itCar.next().driveCar();
@@ -65,11 +65,16 @@ public class RacingManager {
                     return false;
                 }
                 //добавляет новую машину
-                if(car.getY() == 2*timegap*RaceConst.velocity){
-                    Car nucar = (Car)racingPark.poll();
-                    nucar.setX(choseLine()); nucar.setY(0);
-                    nucar.driveCar();
-                    itCar.add(nucar);
+                if(car.getY() == 2*timegap*RaceConst.velocity && car.isMajor()){
+                    //первая (главная) машина в паре
+                    Car majorcar = (Car)racingPark.poll();
+                    majorcar.setX(choseLine()); majorcar.setY(0);
+                    majorcar.driveCar(); majorcar.setMajor(true);
+                    //вторая машина в паре
+                    Car secondcar = (Car)racingPark.poll();
+                    secondcar.setX(choseLine()); secondcar.setY(0);
+                    secondcar.driveCar(); secondcar.setMajor(false);
+                    itCar.add(majorcar); itCar.add(secondcar);
                 }
                 //удаляет уехавшую из области видимости пользователя машину
                 if (car.getY() >= 6*timegap*RaceConst.velocity ){

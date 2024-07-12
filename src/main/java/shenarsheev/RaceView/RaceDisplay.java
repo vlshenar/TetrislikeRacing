@@ -10,7 +10,7 @@ import static shenarsheev.RaceConst.*;
 
 public class RaceDisplay extends JComponent {
     //общее количество машин соперников, которые можно разместить на экране
-    private int capacityRoad = 4;
+    private int capacityRoad = 8;
     //координаты игрока
     private int playerX;
     private int playerY = 0;
@@ -67,6 +67,10 @@ public class RaceDisplay extends JComponent {
         g.drawImage(carImg, carX[1]+biasX, carY[1]+biasY, carwidth, carheight, null);
         g.drawImage(carImg, carX[2]+biasX, carY[2]+biasY, carwidth, carheight, null);
         g.drawImage(carImg, carX[3]+biasX, carY[3]+biasY, carwidth, carheight, null);
+        g.drawImage(carImg, carX[4]+biasX, carY[4]+biasY, carwidth, carheight, null);
+        g.drawImage(carImg, carX[5]+biasX, carY[5]+biasY, carwidth, carheight, null);
+        g.drawImage(carImg, carX[6]+biasX, carY[6]+biasY, carwidth, carheight, null);
+        g.drawImage(carImg, carX[7]+biasX, carY[7]+biasY, carwidth, carheight, null);
         g.drawImage(roadImg, 0, roadheight, roadwidth, 2*carheight, null);
     }
 }
